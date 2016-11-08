@@ -1,0 +1,86 @@
+---
+title: '  ARMA模型的检验'
+author: "邹俊杰"
+date: "2016年11月6日"
+output: html_document
+---
+
+0.library
+```{r,warning=FALSE}
+library(ggplot2)
+library(gridExtra)
+```
+
+1.MA(1)模型的数据生成
+
+1.1生成高斯白噪声
+```{r,warning=FALSE}
+set.seed("1234")
+n=250
+a=rnorm(n)
+```
+
+1.2生成含250个值的序列，分布如图
+```{r,warning=FALSE,dev='svg'}
+u=0
+Theta=0.5
+z=array(NA,n)
+z[1]=u+a[1]
+for(t in 2:n) 
+  z[t]=u+a[t]-Theta*a[t-1]
+plot(z,type = "l")
+```
+
+1.3手工计算ACVF,ACF估计值
+```{r,warning=FALSE,dev='svg'}
+Ez=mean(z)
+Gamma=array(NA,n-1)
+Rou=array(NA,n-1)
+sum=0
+for(t in 1:n) 
+  sum=sum+(z[t]-Ez)*(z[t]-Ez)
+Gamma0=1/n*sum
+
+for(k in 1:(n-1)){
+  sum=0
+  for(t in 1:(n-k)) 
+    sum=sum+(z[t]-Ez)*(z[t+k]-Ez)
+  Gamma[k]=1/n*sum
+  Rou[k]=Gamma[k]/Gamma0
+}
+
+No=0:(n-1)
+data=data.frame(no = No, gamma=c(Gamma0,Gamma),rou = c(1,Rou))
+
+p <-ggplot(data) 
+p1=p+geom_bar(width=0.1,mapping=aes(x=no, y=rou),stat = "identity")+
+  xlab("NO")+ ylab("ACF")+ xlim(-1,24)
+p2=p+geom_bar(width=0.1,mapping = aes(x=no, y=gamma),stat ="identity")+
+  xlab("NO")+ ylab("ACVF")+ xlim(-1,24)
+grid.arrange(p1, p2, nrow=1, ncol=2)
+
+```
+
+1.4 acf函数生成
+```{r,warning=FALSE,dev='svg'}
+acf(z,type = "correlation")
+acf(z,type = "covariance")
+acf(z,type = "partial")
+
+```
+
+
+
+收获
+
+1.```{r,warning=FALSE,dev='svg'} 输出矢量图
+
+2.ggplot2 的使用
+
+3.使用ggplot2时，常用的par不能用了，可以使用gridExtra包里的grid.arrage分页
+
+4.acf函数的使用
+
+5.ggplot2的坐标轴怎么移动有时间再看看
+
+6.set.seed("1234") 设置伪随机数起点，使每次模拟结果相同
