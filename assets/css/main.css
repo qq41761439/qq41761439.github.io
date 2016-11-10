@@ -1841,9 +1841,13 @@
 	}
  
 	h2 {
-		font-size: 2.25em;
-		letter-spacing: -2px;
-		line-height: 1.25em;
+	font-size: 2.25em;
+	letter-spacing: -2px;
+	line-height: 1.25em;
+	font-weight: 400;
+	font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", serif;
+	font-style: normal;
+	text-align: center;
 	}
 
 	strong, b {
@@ -2275,6 +2279,10 @@
 
 		.main.fullscreen {
 			height: 100%;
+		}
+		
+		.main.autoscreen {
+			height: auto;
 		}
 
 		.main.style1 {
@@ -3379,7 +3387,7 @@ ul li a {
 		/* Main */
 
 			.main.fullscreen {
-				height: auto !important;
+				height: 100% !important;
 			}
 
 			.main.style1 {
