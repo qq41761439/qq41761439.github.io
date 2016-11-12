@@ -239,10 +239,14 @@ $$\lim_{n \to \infty} \frac{1}{n}=0$$
 </div>
 <div class="section level2">
 <h2><span class="header-section-number">3.6</span> 多行公式</h2>
-<pre><code>&amp; = &amp; 为对齐点
-$$\cos 2\theta &amp; = &amp; \cos^2 \theta - \sin^2 \theta \\\\
-&amp; = &amp; 2 \cos^2 \theta - 1.$$
-
+<pre><code>&amp; = 为对齐点
+$$
+  \begin{aligned}
+  \dot{x} &amp; = \sigma(y-x) \\\\
+  \dot{y} &amp; = \rho x - y - xz \\\\
+  \dot{z} &amp; = -\beta z + xy
+  \end{aligned}
+$$
 R与markdown不同的是\换行要用4个，而不是两个
 这里需要用到\begin{aligned}和\end{aligned}</code></pre>
 <p><span class="math">\[
